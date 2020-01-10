@@ -40,9 +40,13 @@ To be able to import the Python code (both the C++ binding pyspiel and the rest)
 When using a virtualenv, the following should be added to <virtualenv>/bin/activate. For a system-wide install, ddd it in your .bashrc or .profile.
 
 #把下面语句粘贴到 <virtualenv>/bin/activate
-# For the python modules in open_spiel.
+    
+#For the python modules in open_spiel.
+
 export PYTHONPATH=$PYTHONPATH:/<path_to_open_spiel>
-# For the Python bindings of Pyspiel
+
+#For the Python bindings of Pyspiel
+
 export PYTHONPATH=$PYTHONPATH:/<path_to_open_spiel>/build/python
 
 
