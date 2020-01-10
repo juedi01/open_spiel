@@ -33,7 +33,7 @@ ctest -j12
 
 examples/example --game=tic_tac_toe
 
-
+------------------------------------------------------------------------------------------------------------------------------
 Setting Your PYTHONPATH environment variable
 To be able to import the Python code (both the C++ binding pyspiel and the rest) from any location, you will need to add to your PYTHONPATH the root directory and the open_spiel directory.
 
