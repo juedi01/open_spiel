@@ -5,7 +5,7 @@ virtualenv -p python3 venv
 source venv/bin/activate
 
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-# Install pip deps as your user. Do not use the system's pip.
+#Install pip deps as your user. Do not use the system's pip.
 python3 get-pip.py --user
 pip3 install --upgrade pip --user
 pip3 install --upgrade setuptools testresources --user
