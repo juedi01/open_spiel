@@ -1,8 +1,8 @@
 #https://github.com/deepmind/open_spiel/blob/master/docs/install.md
 ./install.sh
 
-virtualenv -p python3 venv
-source venv/bin/activate
+virtualenv -p python3 openspiel_venv
+source openspiel_venv/bin/activate
 
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 # Install pip deps as your user. Do not use the system's pip.
@@ -15,7 +15,7 @@ pip3 install -r requirements.txt
 
 #https://github.com/deepmind/open_spiel/issues/64
 mkdir build && cd build
-CXX=g++-9 cmake -DPython_TARGET_VERSION=3.7.2 -DCMAKE_CXX_COMPILER=${CXX} ../open_spiel
+CXX=g++-9 cmake -DPython_TARGET_VERSION=3.7.0 -DCMAKE_CXX_COMPILER=${CXX} ../open_spiel
 #the way to update g++-9:https://www.jianshu.com/p/7a8878397213
 make -j12
 ctest -j12
@@ -41,12 +41,12 @@ sudo apt-get update
     sudo update-alternatives --remove-all g++
 4、安装 g++ 和 gcc （以7版本为例）
 
-   sudo apt-get install gcc-7
-   sudo apt-get install g++-7
+   sudo apt-get install gcc-9
+   sudo apt-get install g++-9
 5、将gcc和g++绑定到新安装的版本上
 
-    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 20
-    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 20
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 20
+    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 20
 6、检查是否安装成功
 
    gcc --version
