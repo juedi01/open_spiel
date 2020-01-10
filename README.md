@@ -1,66 +1,83 @@
+#https://github.com/deepmind/open_spiel/blob/master/docs/install.md
+./install.sh
 
-# OpenSpiel: A Framework for Reinforcement Learning in Games
+virtualenv -p python3 venv
+source venv/bin/activate
 
-[![Documentation Status](https://readthedocs.org/projects/openspiel/badge/?version=latest)](https://openspiel.readthedocs.io/en/latest/?badge=latest)
-[![Build Status](https://travis-ci.org/deepmind/open_spiel.svg?branch=master)](https://travis-ci.org/deepmind/open_spiel)
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+# Install pip deps as your user. Do not use the system's pip.
+python3 get-pip.py --user
+pip3 install --upgrade pip --user
+pip3 install --upgrade setuptools testresources --user
 
-OpenSpiel is a collection of environments and algorithms for research in general
-reinforcement learning and search/planning in games. OpenSpiel supports n-player
-(single- and multi- agent) zero-sum, cooperative and general-sum, one-shot and
-sequential, strictly turn-taking and simultaneous-move, perfect and imperfect
-information games, as well as traditional multiagent environments such as
-(partially- and fully- observable) grid worlds and social dilemmas. OpenSpiel
-also includes tools to analyze learning dynamics and other common evaluation
-metrics. Games are represented as procedural extensive-form games, with some
-natural extensions. The core API and games are implemented in C++ and exposed to
-Python. Algorithms and tools are written both in C++ and Python. There is also a
-branch of pure Swift in the `swift` subdirectory.
+pip3 install -r requirements.txt
 
-To try OpenSpiel in Google Colaboratory, please refer to `open_spiel/colabs` subdirectory or start [here](https://colab.research.google.com/github/deepmind/open_spiel/blob/master/open_spiel/colabs/install_open_spiel.ipynb).
 
-<p align="center">
-  <img src="docs/_static/OpenSpielB.png" alt="OpenSpiel visual asset">
-</p>
+#https://github.com/deepmind/open_spiel/issues/64
+mkdir build && cd build
+CXX=g++-9 cmake -DPython_TARGET_VERSION=3.7.2 -DCMAKE_CXX_COMPILER=${CXX} ../open_spiel
+#the way to update g++-9:https://www.jianshu.com/p/7a8878397213
+make -j12
+ctest -j12
 
-# Index
+examples/example --game=tic_tac_toe
 
-Please choose among the following options:
 
-*   [Installing OpenSpiel](docs/install.md)
-*   [Introduction to OpenSpiel](docs/intro.md)
-*   [API Overview and First Example](docs/concepts.md)
-*   [Overview of Implemented Games](docs/games.md)
-*   [Overview of Implemented Algorithms](docs/algorithms.md)
-*   [Developer Guide](docs/developer_guide.md)
-*   [Guidelines and Contributing](docs/contributing.md)
-*   [Swift OpenSpiel](docs/swift.md)
-*   [Authors](docs/authors.md)
 
-For a longer introduction to the core concepts, formalisms, and terminology,
-including an overview of the algorithms and some results, please see
-[OpenSpiel: A Framework for Reinforcement Learning in Games](https://arxiv.org/abs/1908.09453).
 
-If you use OpenSpiel in your research, please cite the paper using the following
-BibTeX:
 
-```
-@article{LanctotEtAl2019OpenSpiel,
-  title     = {{OpenSpiel}: A Framework for Reinforcement Learning in Games},
-  author    = {Marc Lanctot and Edward Lockhart and Jean-Baptiste Lespiau and
-               Vinicius Zambaldi and Satyaki Upadhyay and Julien P\'{e}rolat and
-               Sriram Srinivasan and Finbarr Timbers and Karl Tuyls and
-               Shayegan Omidshafiei and Daniel Hennes and Dustin Morrill and
-               Paul Muller and Timo Ewalds and Ryan Faulkner and J\'{a}nos Kram\'{a}r
-               and Bart De Vylder and Brennan Saeta and James Bradbury and David Ding
-               and Sebastian Borgeaud and Matthew Lai and Julian Schrittwieser and
-               Thomas Anthony and Edward Hughes and Ivo Danihelka and Jonah Ryan-Davis},
-  year      = {2019},
-  eprint    = {1908.09453},
-  archivePrefix = {arXiv},
-  primaryClass = {cs.LG},
-  journal   = {CoRR},
-  volume    = {abs/1908.09453},
-  url       = {http://arxiv.org/abs/1908.09453},
-}
-```
+----------------------------------------------------------------------------------------------------------------------------------
+#the way to update g++-9:
+
+1、用于加入源，方便更新。
+
+sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+2、更新
+
+sudo apt-get update
+3、将/usr/bin/gcc和/usr/bin/g++这两个快捷方式给删除
+
+    sudo update-alternatives --remove-all gcc
+    sudo update-alternatives --remove-all g++
+4、安装 g++ 和 gcc （以7版本为例）
+
+   sudo apt-get install gcc-7
+   sudo apt-get install g++-7
+5、将gcc和g++绑定到新安装的版本上
+
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 20
+    sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 20
+6、检查是否安装成功
+
+   gcc --version
+   g++ --version
+··········以上就能用了························
+
+二、g++ gcc的版本切换
+
+因为笔者安装了多个版本，在以上绑定后，版本仍显示4.9，而不是7.为此虚做版本切换：
+
+如果你的Ubuntu中安装了多个版本的g++或者gcc，比如4.8 4.9 5.5等多个版本，想要切换时，打开新的终端，并输入
+
+sudo update-alternatives --config g++
+
+按照提示数字选择想要使用的版本。
+
+即可选择g++版本，gcc同理，在终端中输入
+
+sudo update-alternatives --config gcc
+选择相应数字，即选择想要使用的版本。
+
+三、linux g++开启C++11/14支持
+
+sudo vim ~/.bashrc
+在some more ls aliases注释块的地方添加下面这两行：
+
+alias g++11='g++ -g -Wall -std=c++11'
+alias g++14='g++ -g -Wall -std=c++14'
+
+作者：阮明晨
+链接：https://www.jianshu.com/p/7a8878397213
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
 
