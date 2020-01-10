@@ -1,23 +1,34 @@
 #https://github.com/deepmind/open_spiel/blob/master/docs/install.md
+
 ./install.sh
 
 virtualenv -p python3 venv
+
 source venv/bin/activate
 
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+
 #Install pip deps as your user. Do not use the system's pip.
+
 python3 get-pip.py --user
+
 pip3 install --upgrade pip --user
+
 pip3 install --upgrade setuptools testresources --user
 
 pip3 install -r requirements.txt
 
 
 #https://github.com/deepmind/open_spiel/issues/64
+
 mkdir build && cd build
+
 CXX=g++-9 cmake -DPython_TARGET_VERSION=3.7.2 -DCMAKE_CXX_COMPILER=${CXX} ../open_spiel
+
 #the way to update g++-9:https://www.jianshu.com/p/7a8878397213
+
 make -j12
+
 ctest -j12
 
 examples/example --game=tic_tac_toe
